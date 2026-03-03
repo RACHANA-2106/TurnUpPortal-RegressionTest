@@ -5,8 +5,8 @@ using System.Text;
 
 namespace TurnUpPortal_RegressionTest.Utilities
 {
-    public class CommonDriver
-    {
+public class CommonDriver
+  {
         public static IWebDriver driver;
-    }
+  }
 }
