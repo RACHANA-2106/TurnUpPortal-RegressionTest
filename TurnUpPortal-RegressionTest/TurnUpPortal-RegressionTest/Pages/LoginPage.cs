@@ -10,7 +10,9 @@ namespace TurnUpPortal_RegressionTest.Pages
     {
         public void LoginActions(IWebDriver driver)
         {
-           
+
+            
+
             driver.Navigate().GoToUrl("http://horse.industryconnect.io");
             driver.Manage().Window.Maximize();
             Thread.Sleep(1000);
@@ -19,9 +21,7 @@ namespace TurnUpPortal_RegressionTest.Pages
 
             driver.FindElement(By.XPath("//input[@value='Log in']")).Click();
 
-            ChromeOptions options = new ChromeOptions();
-            options.AddUserProfilePreference("profile.password_manager_leak_detection", false);
-            driver = new ChromeDriver(options);
+            
 
         }
     }

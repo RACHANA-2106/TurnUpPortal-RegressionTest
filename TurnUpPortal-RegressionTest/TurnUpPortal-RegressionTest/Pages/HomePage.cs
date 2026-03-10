@@ -23,16 +23,37 @@ namespace TurnUpPortal_RegressionTest.Pages
 
             }
         }
-        public void Navigate(IWebDriver driver)
+        private By clickOnAdminTab => By.XPath("/html/body/div[3]/div/div/ul/li[5]/a/span");
+        IWebElement adminTab;
+        public void NavigatetoTMPage(IWebDriver driver)
         {
-            // Create a Time and material
-            IWebElement adminTab = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+            //Naviage to TM page
+            adminTab = driver.FindElement(clickOnAdminTab);
             adminTab.Click();
 
-            Wait.WaitForElementToBeClicable(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a", 3);
+            Wait.WaitForElementToBeClickable(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a", 3);
 
-            IWebElement timeAndMaterialOption = driver.FindElement(By.XPath("/html[1]/body[1]/div[3]/div[1]/div[1]/ul[1]/li[5]/ul[1]/li[3]/a[1]"));
+            IWebElement timeAndMaterialOption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a"));
             timeAndMaterialOption.Click();
+        }
+        public void NavigatetoEmployeesPage(IWebDriver driver)
+        {
+            // Naviage to Employees Page
+            try
+            {
+                adminTab = driver.FindElement(clickOnAdminTab);
+                adminTab.Click();
+            }
+            catch (StaleElementReferenceException e)
+            {
+                adminTab = driver.FindElement(clickOnAdminTab);
+                adminTab.Click();
+            }
+
+                Wait.WaitForElementToBeClickable(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a", 3);
+
+            IWebElement employeesOption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a"));
+            employeesOption.Click();
         }
 
     }

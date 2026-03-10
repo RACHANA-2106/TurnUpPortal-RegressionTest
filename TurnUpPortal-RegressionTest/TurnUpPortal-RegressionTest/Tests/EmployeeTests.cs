@@ -2,7 +2,6 @@
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using TurnUpPortal_RegressionTest.Pages;
 using TurnUpPortal_RegressionTest.Utilities;
@@ -10,7 +9,7 @@ using TurnUpPortal_RegressionTest.Utilities;
 namespace TurnUpPortal_RegressionTest.Tests
 {
     [TestFixture]
-    public class TM_Tests : CommonDriver
+    public class EmployeeTests : CommonDriver
     {
         [SetUp]
         public void SetUpSteps()
@@ -24,31 +23,15 @@ namespace TurnUpPortal_RegressionTest.Tests
 
 
             HomePage hp = new HomePage();
-             hp.UserLoginConfirm(driver);
-            hp.NavigatetoTMPage(driver);
+            hp.NavigatetoEmployeesPage(driver);
         }
-            [Test]
-            public void CreateTimeRecordTest()
-            {
-                TMPage tmp = new TMPage();
-                tmp.CreateTimeRecord(driver);
-            }
-
-            [Test]
-            public void EditTimeRecordTest()
-        {
-            // Edit Time Record
-            TMPage tmp = new TMPage();
-            tmp.EditTimeRecord(driver, "Test-R1 Edited", "Sample Test-R1 desc Updated", "60");
-        }
-        
         [Test]
-        public void DeleteTimeRecordTest()
+        public void CreateEmployeeTest()
         {
-            // Edit Time Record
-            TMPage tmp = new TMPage();
-            tmp.DeleteTimeRecord(driver);
+            EmployeePage emp = new EmployeePage();
+            emp.CreateEmployeeRecord(driver);
         }
+
 
         [TearDown]
         public void CloseTestRun()
@@ -56,5 +39,4 @@ namespace TurnUpPortal_RegressionTest.Tests
             driver.Quit();
         }
     }
-    
 }
