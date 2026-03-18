@@ -8,52 +8,40 @@ namespace TurnUpPortal_RegressionTest.Pages
 {
     public class HomePage
     {
-        public void UserLoginConfirm(IWebDriver driver)
+        private readonly IWebDriver driver;
+
+        private readonly By helloUserText = By.XPath("//*[@id='logoutForm']/ul/li/a");
+        private readonly By administrationMenu = By.XPath("/html/body/div[3]/div/div/ul/li[5]/a/span");
+        private readonly By timeAndMaterialsOption = By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a");
+        private readonly By employeesOption = By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a");
+
+        public HomePage(IWebDriver driver)
         {
-            
-            IWebElement actualText = driver.FindElement(By.XPath("//*[@id=\"logoutForm\"]/ul/li/a"));
-            if (actualText.Text == "Hello hari!")
-            {
-                Console.WriteLine("User logged in Successfully!");
-
-            }
-            else
-            {
-                Console.WriteLine("User login failed.");
-
-            }
+            this.driver = driver;
         }
-        private By clickOnAdminTab => By.XPath("/html/body/div[3]/div/div/ul/li[5]/a/span");
-        IWebElement adminTab;
-        public void NavigatetoTMPage(IWebDriver driver)
+
+        public string GetLoggedInUserText()
         {
-            //Naviage to TM page
-            adminTab = driver.FindElement(clickOnAdminTab);
-            adminTab.Click();
-
-            Wait.WaitForElementToBeClickable(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a", 3);
-
-            IWebElement timeAndMaterialOption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a"));
-            timeAndMaterialOption.Click();
+            return WaitHelper.WaitUntilVisible(driver, helloUserText).Text.Trim();
         }
-        public void NavigatetoEmployeesPage(IWebDriver driver)
+
+        public bool IsLoggedInAs(string expectedGreeting)
         {
-            // Naviage to Employees Page
-            try
-            {
-                adminTab = driver.FindElement(clickOnAdminTab);
-                adminTab.Click();
-            }
-            catch (StaleElementReferenceException e)
-            {
-                adminTab = driver.FindElement(clickOnAdminTab);
-                adminTab.Click();
-            }
+            return GetLoggedInUserText().Equals(expectedGreeting, StringComparison.OrdinalIgnoreCase);
+        }
 
-                Wait.WaitForElementToBeClickable(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a", 3);
+        public TimeMaterialPage GoToTimeMaterials()
+        {
+            WaitHelper.WaitUntilClickable(driver, administrationMenu).Click();
+            WaitHelper.WaitUntilClickable(driver, timeAndMaterialsOption).Click();
+            return new TimeMaterialPage(driver);
+        }
 
-            IWebElement employeesOption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a"));
-            employeesOption.Click();
+        public EmployeePage GoToEmployees()
+        {
+            WaitHelper.WaitUntilClickable(driver, administrationMenu).Click();
+            WaitHelper.WaitUntilClickable(driver, employeesOption).Click();
+            return new EmployeePage(driver);
         }
 
     }
