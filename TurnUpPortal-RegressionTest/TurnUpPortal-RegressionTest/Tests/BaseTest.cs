@@ -20,11 +20,11 @@ namespace TurnUpPortal_RegressionTest.Tests
             Driver = WebDriverFactory.CreateChromeDriver();
 
             LoginPage = new LoginPage(Driver);
-            HomePage = new HomePage(Driver);
 
             LoginPage.Login(TestSettings.Username, TestSettings.Password);
 
             Assert.That(HomePage.IsLoggedInAs("Hello hari!"), Is.True, "Login was not successful.");
+            HomePage = new HomePage(Driver);
         }
 
         [TearDown]
